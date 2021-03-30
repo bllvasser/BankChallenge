@@ -116,3 +116,106 @@ public class Branch {
 
 }
 
+package com.company;
+
+import java.util.ArrayList;
+
+
+public class Bank {
+    // private ArrayList<Double> myTransactions;
+    private ArrayList<Branch> myBranch;
+    private ArrayList<Customer> myCustomer;
+
+
+    public Bank() {
+        this.myBranch = new ArrayList<Branch>();
+        this.myCustomer = new ArrayList<Customer>();
+        //   this.myTransactions = new ArrayList<Double>();
+    }
+
+    Branch branch = new Branch("yowsey");
+
+
+    public boolean printCustomerList(String branchName, boolean showtran) {
+        Branch branch = findBranch(branchName);
+        if (branch != null) {
+            System.out.println("Customer details for branch " + branch.getName());
+
+            ArrayList<Customer> branchCust = branch.getCustomers();
+            for (int i = 0; i < branchCust.size(); i++) {
+                Customer branchCusto = branchCust.get(i);
+                System.out.println("Customer: " + branchCusto.getName() + " [ " + (i + 1) + "]");
+                if (showtran) {
+                    System.out.println("Transactions");
+                    ArrayList<Double> transactions = branchCusto.getTransactions();
+                    for (int j = 0; j < transactions.size(); j++) {
+                        System.out.println(" [ " + (j + 1) + " ] Amount " + transactions.get(j));
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public boolean addNewBranch(Branch branch) {
+        if (findBranch(branch.getBranch()) != branch) {
+            System.out.println("Branch is not on file");
+            return false;
+        }
+
+        myBranch.add(branch);
+        return true;
+    }
+
+    private int findBranch(Branch branch) {
+
+        return this.myBranch.indexOf(branch);
+    }
+
+    private Branch findBranch(String branchName) {
+        for (int i = 0; i < this.myBranch.size(); i++) {
+            Branch checkedBranch = this.myBranch.get(i);
+            if (checkedBranch.getName().equals(branchName)) {
+                return checkedBranch;
+            }
+        }
+        return null;
+    }
+
+    public boolean addNewCustomer(Customer customer) {
+        if (findCustomer(customer.getName()) >= 0) {
+            System.out.println("Customer is not on file");
+            return false;
+        }
+
+        myCustomer.add(customer);
+        return true;
+    }
+
+    private int findCustomer(Customer customer) {
+
+        return this.myCustomer.indexOf(customer);
+    }
+
+    private int findCustomer(String customerName) {
+        for (int i = 0; i < this.myCustomer.size(); i++) {
+            Customer customer = this.myCustomer.get(i);
+            if (customer.getName().equals(customerName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public void addNewTransaction(String name, double amt) {
+
+        branch.addNewTransaction(name, amt);
+    }
+
+
+}
+
+
