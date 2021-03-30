@@ -218,4 +218,95 @@ public class Bank {
 
 }
 
+package com.company;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+
+
+    private static Scanner scanner = new Scanner(System.in);
+    private static Bank bank = new Bank();
+    private static Customer customer = new Customer("Yowsey");
+    private static Branch branch = new Branch("yowsey");
+    private static ArrayList<Double> myTransactions = new ArrayList<Double>();
+
+    public static void main(String[] args) {
+
+
+        boolean quit = false;
+        printActions();
+
+        while (!quit) {
+            System.out.println("\nEnter action: (6 to show available actions)");
+            int action = scanner.nextInt();
+
+            switch (action) {
+                case 1:
+                    System.out.println("\n shutting down...");
+                    break;
+
+                case 2:
+                    bank.printCustomerList("branchName", true);
+                    break;
+
+                case 3:
+                    addNewCustomer();
+
+                case 4:
+                    addNewBranch();
+                    break;
+
+                case 5:
+                    addNewTransaction("yowsey", 0.0);
+                    break;
+
+                case 6:
+                    printActions();
+                    break;
+            }
+        }
+
+    }
+
+    private static void printActions() {
+        System.out.println("\n Available actions: \n press");
+        System.out.println("1 - to shutdown\n " +
+                "2 - to print customer list\n " +
+                "3 - to add a new customer\n " +
+                "4 - to add a new branch\n " +
+                "5 - to add a new transaction\n " +
+                "6 - to print a list of available actions.");
+        System.out.println("Choose your action: ");
+    }
+
+    private static void addNewCustomer() {
+        System.out.println("Enter customer name");
+        String name = scanner.nextLine();
+        System.out.println("Enter transaction amount");
+        String tranAmt = scanner.nextLine();
+        Customer newCustomer = Customer.createCustomer(name);
+        if (bank.addNewCustomer(newCustomer)) {
+            System.out.println("New customer added: name " + name + ", transaction amount = " + tranAmt);
+        }
+    }
+
+    private static void addNewBranch() {
+        System.out.println("Enter branch name");
+        String name = scanner.nextLine();
+        Branch newBranch = Branch.createBranch(name);
+        if (bank.addNewBranch(newBranch)) {
+            System.out.println("New branch added: name " + name);
+        }
+    }
+
+    private static void addNewTransaction(String name, double amt) {
+        System.out.println("Enter transaction amount");
+        double tranamt = scanner.nextDouble();
+        bank.addNewTransaction(name, amt);
+    }
+}
+
+
 
